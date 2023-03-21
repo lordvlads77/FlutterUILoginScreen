@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'styles.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -8,6 +9,9 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+
+  bool _remember = false;
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -170,6 +174,43 @@ class _LoginState extends State<Login> {
                       ),
                     ],
                   ),
+                  Container(
+                    alignment: Alignment.centerRight,
+                    child: MaterialButton(
+                        onPressed: () => print('Forgot Password Button Pressed'),
+                        padding: EdgeInsets.only(right: 0),
+                        child: Text(
+                          'Forgot Password?',
+                          style: lLoginStyle,
+                        ),
+                    ),
+                  ),
+                  Container(
+                    child: Row(
+                      children: [
+                        Theme(
+                            data: ThemeData(
+                              unselectedWidgetColor: Colors.white
+                            ),
+                            child: Checkbox(
+                                value: _remember,
+                                checkColor: Colors.indigo,
+                                activeColor: Colors.white,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _remember = value!;
+                                  });
+                                },
+                            ),
+                        ),
+                        Text(
+                          'Remember Me',
+                          style: lLoginStyle,
+                        ),
+                      ],
+                    ),
+                  ),
+
                 ],
               ),
             ),

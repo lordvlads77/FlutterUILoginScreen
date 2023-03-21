@@ -94,5 +94,7 @@ flutter:
         - asset: fonts/OpenSans-Bold.ttf
         - asset: fonts/OpenSans-LightItalic.ttf
           style: italic
+        - asset: fonts/OpenSans-Regular.ttf
+        - asset: fonts/OpenSans-Medium.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
