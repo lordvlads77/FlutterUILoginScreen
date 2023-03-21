@@ -186,6 +186,7 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   Container(
+                    height: 20,
                     child: Row(
                       children: [
                         Theme(
@@ -210,7 +211,66 @@ class _LoginState extends State<Login> {
                       ],
                     ),
                   ),
-
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: 25),
+                    width: double.infinity,
+                    child: ElevatedButton(
+                        style: ButtonStyle(
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                          ),
+                          backgroundColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+                              return Colors.white;
+                          })
+                        ),
+                        onPressed: () => print('Login Button Pressed'),
+                        child: Text('LOGIN',
+                          style: TextStyle(
+                            color: Color(0xFF527DAA),
+                            letterSpacing: 1.5,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'OpenSans',
+                          ),
+                        ),
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      Text('- OR -',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text('Sign in with',
+                        style: lSignStyle,
+                      ),
+                    ],
+                  ),
+                  Container(
+                    height: 60,
+                    width: 60,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black26,
+                          offset: Offset(0, 2),
+                          blurRadius: 6,
+                        ),
+                      ],
+                      image: DecorationImage(
+                        image: AssetImage('img/facebook.jpg'),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
