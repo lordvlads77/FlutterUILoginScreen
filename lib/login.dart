@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'styles.dart';
+import 'welcome.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -11,6 +12,59 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
 
   bool _remember = false;
+  var c_correo = TextEditingController();
+  var c_password = TextEditingController();
+
+  String correo = '';
+  String password = '';
+
+  ingresar(correo, password) {
+      if(correo == '' || password == ''){
+        mostrar_alerta('Debes de llenar todos los datos');
+      }else if(correo != 'saga@gmail.com' && password != '123'){
+        mostrar_alerta('Correo o contraseña Incorrectos');
+      }else{
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (BuildContext context){
+              return new Bienvenida();
+            }
+        ));
+      }
+  }
+
+  mostrar_alerta(mensaje){
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context){
+        return AlertDialog(
+          title: Text('REMEMBAS'),
+          //content: Text(mensaje),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: [
+                Text(mensaje)
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: (){
+                Navigator.of(context).pop();
+              },
+              child: Text('Aceptar'),
+            ),
+          ],
+        );
+      }
+    );
+
+  }
+
+  /*void ingresar(String correo, String password){
+
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -92,6 +146,7 @@ class _LoginState extends State<Login> {
                         ),
                         height: 60,
                         child: TextField(
+                          controller: c_correo,
                           keyboardType: TextInputType.emailAddress,
                           style: TextStyle(
                             color: Colors.white,
@@ -149,6 +204,7 @@ class _LoginState extends State<Login> {
                         ),
                         height: 60,
                         child: TextField(
+                          controller: c_password,
                           obscureText: true,
                           style: TextStyle(
                             color: Colors.white,
@@ -225,7 +281,12 @@ class _LoginState extends State<Login> {
                               return Colors.white;
                           })
                         ),
-                        onPressed: () => print('Login Button Pressed'),
+                        onPressed: (){
+                          correo = c_correo.text;
+                          password = c_password.text;
+
+                          ingresar(correo, password);
+                        },
                         child: Text('LOGIN',
                           style: TextStyle(
                             color: Color(0xFF527DAA),
