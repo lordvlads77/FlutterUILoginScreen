@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'login.dart';
+import 'signup.dart';
 
 void main (){
   runApp(Principal());
@@ -14,7 +15,7 @@ class Principal extends StatelessWidget {
       title: 'Login Screen App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: Login(),
+      home: Register(),
     );
   }
 }

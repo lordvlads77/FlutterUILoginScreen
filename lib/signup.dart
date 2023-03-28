@@ -1,32 +1,37 @@
 import 'package:flutter/material.dart';
 import 'styles.dart';
-import 'welcome.dart';
+import 'registrado.dart';
 
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+class Register extends StatefulWidget {
+  const Register({Key? key}) : super(key: key);
 
   @override
-  State<Login> createState() => _LoginState();
+  State<Register> createState() => _RegisterState();
 }
 
-class _LoginState extends State<Login> {
+class _RegisterState extends State<Register> {
 
   bool _remember = false;
   var c_correo = TextEditingController();
   var c_password = TextEditingController();
+  var c_username = TextEditingController();
+  var c_fullname = TextEditingController();
+  var c_birthday = TextEditingController();
 
   String correo = '';
   String password = '';
+  String username = '';
+  String fullname = '';
+  String birthday = '';
 
-  ingresar(correo, password) {
-    if(correo == '' || password == ''){
+  registrarse(correo, password, username, fullname, birthday) {
+    if(correo == '' || password == '' || username == ''|| fullname == ''|| birthday == ''){
       mostrar_alerta('Debes de llenar todos los datos');
-    }else if(correo != 'saga@gmail.com' && password != '123'){
-      mostrar_alerta('Correo o contraseña Incorrectos');
-    }else{
+    }
+    else{
       Navigator.of(context).push(MaterialPageRoute(
           builder: (BuildContext context){
-            return new Bienvenida();
+            return new Registrado();
           }
       ));
     }
@@ -105,7 +110,7 @@ class _LoginState extends State<Login> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Sign In',
+                    'Register',
                     style: TextStyle(
                       color: Colors.white,
                       fontFamily: 'OpenSans',
@@ -173,7 +178,7 @@ class _LoginState extends State<Login> {
                     ],
                   ),
                   SizedBox(
-                    height: 30,
+                    height: 10,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -230,16 +235,182 @@ class _LoginState extends State<Login> {
                       ),
                     ],
                   ),
-                  Container(
-                    alignment: Alignment.centerRight,
-                    child: MaterialButton(
-                      onPressed: () => print('Forgot Password Button Pressed'),
-                      padding: EdgeInsets.only(right: 0),
-                      child: Text(
-                        'Forgot Password?',
-                        style: lLoginStyle,
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Username',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'OpenSans',
+                        ),
                       ),
-                    ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        decoration: BoxDecoration(
+                          color: Color(0xFF6CA8F1),
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 6,
+                              offset: Offset(0, 2)
+                            ),
+                          ],
+                        ),
+                        height: 60,
+                        child: TextField(
+                          controller: c_username,
+                          keyboardType: TextInputType.text,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'OpenSans',
+                          ),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.only(
+                              top: 14
+                            ),
+                            prefixIcon: Icon(
+                              Icons.person_outline,
+                              color: Colors.white,
+                            ),
+                            hintText: 'Write your username',
+                            hintStyle: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'OpenSans',
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Full Name',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'OpenSans',
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        decoration: BoxDecoration(
+                          color: Color(0xFF6CA8F1),
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black12,
+                                blurRadius: 6,
+                                offset: Offset(0, 2)
+                            ),
+                          ],
+                        ),
+                        height: 60,
+                        child: TextField(
+                          controller: c_fullname,
+                          keyboardType: TextInputType.text,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'OpenSans',
+                          ),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.only(
+                                top: 14
+                            ),
+                            prefixIcon: Icon(
+                              Icons.abc_outlined,
+                              color: Colors.white,
+                            ),
+                            hintText: 'Write your Fullname',
+                            hintStyle: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'OpenSans',
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Birthday',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'OpenSans',
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        decoration: BoxDecoration(
+                          color: Color(0xFF6CA8F1),
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black12,
+                                blurRadius: 6,
+                                offset: Offset(0, 2)
+                            ),
+                          ],
+                        ),
+                        height: 60,
+                        child: TextField(
+                          controller: c_birthday,
+                          keyboardType: TextInputType.datetime,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'OpenSans',
+                          ),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.only(
+                                top: 14
+                            ),
+                            prefixIcon: Icon(
+                              Icons.date_range_outlined,
+                              color: Colors.white,
+                            ),
+                            hintText: 'Input your birthday',
+                            hintStyle: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'OpenSans',
+                              fontStyle: FontStyle.italic,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 30,
                   ),
                   Container(
                     height: 20,
@@ -261,7 +432,7 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                         Text(
-                          'Remember Me',
+                          'Terms and Conditions',
                           style: lLoginStyle,
                         ),
                       ],
@@ -282,14 +453,15 @@ class _LoginState extends State<Login> {
                           })
                       ),
                       onPressed: (){
-
-                        FocusScope.of(context).unfocus();
                         correo = c_correo.text;
                         password = c_password.text;
+                        username = c_username.text;
+                        fullname = c_fullname.text;
+                        birthday = c_birthday.text;
 
-                        ingresar(correo, password);
+                        registrarse(correo, password, username, fullname, birthday);
                       },
-                      child: Text('LOGIN',
+                      child: Text('SIGN UP',
                         style: TextStyle(
                           color: Color(0xFF527DAA),
                           letterSpacing: 1.5,
@@ -297,40 +469,6 @@ class _LoginState extends State<Login> {
                           fontWeight: FontWeight.bold,
                           fontFamily: 'OpenSans',
                         ),
-                      ),
-                    ),
-                  ),
-                  Column(
-                    children: [
-                      Text('- OR -',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text('Sign in with',
-                        style: lSignStyle,
-                      ),
-                    ],
-                  ),
-                  Container(
-                    height: 60,
-                    width: 60,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black26,
-                          offset: Offset(0, 2),
-                          blurRadius: 6,
-                        ),
-                      ],
-                      image: DecorationImage(
-                        image: AssetImage('img/facebook.jpg'),
                       ),
                     ),
                   ),
@@ -343,4 +481,3 @@ class _LoginState extends State<Login> {
     );
   }
 }
-
