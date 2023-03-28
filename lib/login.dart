@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'styles.dart';
+import 'welcome.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -11,6 +12,59 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
 
   bool _remember = false;
+  var c_correo = TextEditingController();
+  var c_password = TextEditingController();
+
+  String correo = '';
+  String password = '';
+
+  ingresar(correo, password) {
+      if(correo == '' || password == ''){
+        mostrar_alerta('Debes de llenar todos los datos');
+      }else if(correo != 'saga@gmail.com' && password != '123'){
+        mostrar_alerta('Correo o contraseña Incorrectos');
+      }else{
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (BuildContext context){
+              return new Bienvenida();
+            }
+        ));
+      }
+  }
+
+  mostrar_alerta(mensaje){
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context){
+        return AlertDialog(
+          title: Text('REMEMBAS'),
+          //content: Text(mensaje),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: [
+                Text(mensaje)
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: (){
+                Navigator.of(context).pop();
+              },
+              child: Text('Aceptar'),
+            ),
+          ],
+        );
+      }
+    );
+
+  }
+
+  /*void ingresar(String correo, String password){
+
+  }*/
 
     /*Gesture Detector e InkWell
     Opciones que se tienen para cubrir un widget entero
