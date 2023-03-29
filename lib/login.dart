@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'styles.dart';
 import 'welcome.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -19,45 +20,60 @@ class _LoginState extends State<Login> {
   String password = '';
 
   ingresar(correo, password) {
-      if(correo == '' || password == ''){
-        mostrar_alerta('Debes de llenar todos los datos');
-      }else if(correo != 'saga@gmail.com' && password != '123'){
-        mostrar_alerta('Correo o contraseña Incorrectos');
-      }else{
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (BuildContext context){
-              return new Bienvenida();
-            }
-        ));
-      }
+    if(correo == '' || password == ''){
+      mostrar_alerta('Debes de llenar todos los datos');
+    }else if(correo != 'saga@gmail.com' && password != '123'){
+      mostrar_alerta('Correo o contraseña Incorrectos');
+    }else{
+
+      guardar_datos(correo, password);
+
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (BuildContext context){
+            return new Bienvenida();
+          }
+      ));
+    }
+
+    c_correo.text = '';
+    c_password.text = '';
+  }
+
+  Future<void> guardar_datos(correo, password) async{
+
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    await preferences.setString('correo', correo);
+    await preferences.setString('password', password);
+
   }
 
   mostrar_alerta(mensaje){
 
     showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context){
-        return AlertDialog(
-          title: Text('REMEMBAS'),
-          //content: Text(mensaje),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: [
-                Text(mensaje)
-              ],
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context){
+          return AlertDialog(
+            title: Text('REMEMBAS'),
+            //content: Text(mensaje),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: [
+                  Text(mensaje)
+                ],
+              ),
             ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: (){
-                Navigator.of(context).pop();
-              },
-              child: Text('Aceptar'),
-            ),
-          ],
-        );
-      }
+            actions: [
+              TextButton(
+                onPressed: (){
+                  Navigator.of(context).pop();
+                },
+                child: Text('Aceptar'),
+              ),
+            ],
+          );
+        }
     );
 
   }
@@ -66,19 +82,22 @@ class _LoginState extends State<Login> {
 
   }*/
 
-    /*Gesture Detector e InkWell
-    Opciones que se tienen para cubrir un widget entero
-     y darle click
-     */
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return  GestureDetector(
       onTap: (){
+
         final FocusScopeNode focus = FocusScope.of(context);
         if(!focus.hasPrimaryFocus && focus.hasFocus){
           FocusManager.instance.primaryFocus?.unfocus();
         }
+
       },
       child: Scaffold(
         body: Stack(
@@ -87,22 +106,22 @@ class _LoginState extends State<Login> {
               height: double.infinity,
               width: double.infinity,
               decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Color(0xFF73AEF5),
-                    Color(0xFF61A4F1),
-                    Color(0xFF478DE0),
-                    Color(0xFF398AE5),
-                  ],
-                  stops: [
-                    0.1,
-                    0.4,
-                    0.7,
-                    0.9
-                  ],
-                )
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color(0xFF73AEF5),
+                      Color(0xFF61A4F1),
+                      Color(0xFF478DE0),
+                      Color(0xFF398AE5),
+                    ],
+                    stops: [
+                      0.1,
+                      0.4,
+                      0.7,
+                      0.9
+                    ],
+                  )
               ),
             ),
             Container(
@@ -150,14 +169,15 @@ class _LoginState extends State<Login> {
                             borderRadius: BorderRadius.circular(10),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black12,
-                                blurRadius: 6,
-                                offset: Offset(0, 2)
+                                  color: Colors.black12,
+                                  blurRadius: 6,
+                                  offset: Offset(0, 2)
                               ),
                             ],
                           ),
                           height: 60,
                           child: TextField(
+                            controller: c_correo,
                             keyboardType: TextInputType.emailAddress,
                             style: TextStyle(
                               color: Colors.white,
@@ -166,7 +186,7 @@ class _LoginState extends State<Login> {
                             decoration: InputDecoration(
                               border: InputBorder.none,
                               contentPadding: EdgeInsets.only(
-                                top: 14
+                                  top: 14
                               ),
                               prefixIcon: Icon(
                                 Icons.mail_outline,
@@ -215,10 +235,11 @@ class _LoginState extends State<Login> {
                           ),
                           height: 60,
                           child: TextField(
+                            controller: c_password,
                             obscureText: true,
                             style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'OpenSans'
+                                color: Colors.white,
+                                fontFamily: 'OpenSans'
                             ),
                             decoration: InputDecoration(
                               border: InputBorder.none,
@@ -243,12 +264,12 @@ class _LoginState extends State<Login> {
                     Container(
                       alignment: Alignment.centerRight,
                       child: MaterialButton(
-                          onPressed: () => print('Forgot Password Button Pressed'),
-                          padding: EdgeInsets.only(right: 0),
-                          child: Text(
-                            'Forgot Password?',
-                            style: lLoginStyle,
-                          ),
+                        onPressed: () => print('Forgot Password Button Pressed'),
+                        padding: EdgeInsets.only(right: 0),
+                        child: Text(
+                          'Forgot Password?',
+                          style: lLoginStyle,
+                        ),
                       ),
                     ),
                     Container(
@@ -256,19 +277,19 @@ class _LoginState extends State<Login> {
                       child: Row(
                         children: [
                           Theme(
-                              data: ThemeData(
+                            data: ThemeData(
                                 unselectedWidgetColor: Colors.white
-                              ),
-                              child: Checkbox(
-                                  value: _remember,
-                                  checkColor: Colors.indigo,
-                                  activeColor: Colors.white,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _remember = value!;
-                                    });
-                                  },
-                              ),
+                            ),
+                            child: Checkbox(
+                              value: _remember,
+                              checkColor: Colors.indigo,
+                              activeColor: Colors.white,
+                              onChanged: (value) {
+                                setState(() {
+                                  _remember = value!;
+                                });
+                              },
+                            ),
                           ),
                           Text(
                             'Remember Me',
@@ -281,26 +302,34 @@ class _LoginState extends State<Login> {
                       padding: EdgeInsets.symmetric(vertical: 25),
                       width: double.infinity,
                       child: ElevatedButton(
-                          style: ButtonStyle(
+                        style: ButtonStyle(
                             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                               ),
                             ),
                             backgroundColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
-                                return Colors.white;
+                              return Colors.white;
                             })
+                        ),
+                        onPressed: (){
+
+                          FocusScope.of(context).unfocus();
+
+                          correo = c_correo.text;
+                          password = c_password.text;
+
+                          ingresar(correo, password);
+                        },
+                        child: Text('LOGIN',
+                          style: TextStyle(
+                            color: Color(0xFF527DAA),
+                            letterSpacing: 1.5,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'OpenSans',
                           ),
-                          onPressed: () => print('Login Button Pressed'),
-                          child: Text('LOGIN',
-                            style: TextStyle(
-                              color: Color(0xFF527DAA),
-                              letterSpacing: 1.5,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'OpenSans',
-                            ),
-                          ),
+                        ),
                       ),
                     ),
                     Column(
@@ -347,3 +376,4 @@ class _LoginState extends State<Login> {
     );
   }
 }
+
